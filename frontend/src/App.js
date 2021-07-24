@@ -1,9 +1,18 @@
+import { Container } from 'react-bootstrap'
+import { HashRouter as Router, Route} from 'react-router-dom'
+
 
 function App() {
   return (
-    <div>
+    <Router>
+            
+      <main className="py-3">
+      <Container>
+        
+      </Container>
+      </main>
       
-    </div>
+    </Router>
   );
 }
 
