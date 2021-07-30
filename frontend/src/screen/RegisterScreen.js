@@ -8,7 +8,7 @@ import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 
 function RegisterScreen({location,history}) {
-    const [name,setName]= useState('')
+    
     const [email,setEmail]= useState('')
     const [password,setPassword]= useState('')
     const [confirmpassword,setConfirmPassword]= useState('')
@@ -16,7 +16,7 @@ function RegisterScreen({location,history}) {
 
 
     const dispatch= useDispatch()
-    const redirect=Location.search? Location.search.split('=')[1]:'/'
+    const redirect = location.search ? location.search.split('=')[1] : '/'
 
     const userRegister=useSelector(state=>state.userRegister)
     const {error,loading,userInfo}=userRegister
@@ -33,7 +33,7 @@ function RegisterScreen({location,history}) {
         if (password != confirmpassword){
             setMessage('Password did not match')
         }else{
-            dispatch(register(name,email,password))
+            dispatch(register(email,password))
         }
 
     }
@@ -46,20 +46,8 @@ function RegisterScreen({location,history}) {
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
             <Form onSubmit={submitHandler}>
-                <Form.Group controlId='name'>
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control
-                    required
-                    type='text'
-                    placeholder='Enter Name'
-                    value={name}
-                    onChange={(e)=>setName(e.target.value)}
-                    >
-                    </Form.Control>
-                </Form.Group>
-
-
-                <Form.Group controlId='email'>
+                
+                <Form.Group controlId='email' className='my-3'>
                     <Form.Label>Email Address</Form.Label>
                     <Form.Control
                     required
@@ -72,7 +60,7 @@ function RegisterScreen({location,history}) {
                 </Form.Group>
 
 
-                <Form.Group controlId='password'>
+                <Form.Group controlId='password' className='my-3'>
                     <Form.Label>Password</Form.Label>
                     <Form.Control
                     required
@@ -84,7 +72,7 @@ function RegisterScreen({location,history}) {
                     </Form.Control>
                 </Form.Group>
 
-                <Form.Group controlId='confirmpassword'>
+                <Form.Group controlId='confirmpassword' className='my-3'>
                     <Form.Label>Confirm Password</Form.Label>
                     <Form.Control
                     required
@@ -98,7 +86,7 @@ function RegisterScreen({location,history}) {
 
 
 
-                <Button type='submit' variant='primary'>Register</Button>
+                <Button type='submit' variant='primary' className='my-3'>Register</Button>
             </Form>
                 <Row className='py-3'>
                     <Col>

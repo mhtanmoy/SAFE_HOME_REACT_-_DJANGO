@@ -1,166 +1,117 @@
-import React, { useState,useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import { useDispatch,useSelector } from 'react-redux'
-import { Row,Col,Form,Button,Table } from 'react-bootstrap'
-import { LinkContainer } from 'react-router-bootstrap'
-import { getUserDetails,updateUserProfile } from '../actions/userActions'
-import { listMyOrders } from '../actions/orderActions'
-import Message from '../components/Message'
+import React, { useState, useEffect } from 'react'
+import { Row, Col, Button, Form } from 'react-bootstrap'
 import Loader from '../components/Loader'
+import Message from '../components/Message'
+import { useDispatch, useSelector } from 'react-redux'
+import { getUserDetails, updateUserProfile } from '../actions/userActions'
 import { USER_UPDATE_PROFILE_RESET } from '../constants/userConstants'
 
-function ProfileScreen({history}) {
+function ProfileScreen({ history }) {
+    
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
+    const [confirmPassword, setConfirmPassword] = useState('')
+    const [message, setMessage] = useState('')
 
-    const [name,setName]= useState('')
-    const [email,setEmail]= useState('')
-    const [password,setPassword]= useState('')
-    const [confirmpassword,setConfirmPassword]= useState('')
-    const [message,setMessage]= useState('')
+    const dispatch = useDispatch()
 
+    const userDetails = useSelector(state => state.userDetails)
+    const {error, loading, user} = userDetails
 
-    const dispatch= useDispatch()
-    const userDetails=useSelector(state=>state.userDetails)
-    const {error,loading,user}=userDetails
-    const userLogin=useSelector(state=>state.userLogin)
-    const {userInfo}=userLogin
-    const userUpdateProfile=useSelector(state=>state.userUpdateProfile)
-    const { success }=userUpdateProfile
-    const orderListMy=useSelector(state=>state.orderListMy)
-    const { loading:loadingOrder, error:errorOrder, orders }=orderListMy
+    const userLogin = useSelector(state => state.userLogin)
+    const {userInfo} = userLogin
+
+    const userUpdateProfile = useSelector(state => state.userUpdateProfile)
+    const { success } = userUpdateProfile
+
 
     useEffect(() => {
-        if (!userInfo){
+        if (!userInfo) {
             history.push('/login')
-        }else{
-            if(!user || !user.name || success || userInfo._id !== user._id ){
-                dispatch({type: USER_UPDATE_PROFILE_RESET})
+        } else {
+            if (!user || !user.email || success || userInfo.id !== user.id) {
+                dispatch({ type: USER_UPDATE_PROFILE_RESET })
                 dispatch(getUserDetails('profile'))
-                dispatch(listMyOrders())
-
-            }else{
-                setName(user.name)
+            } else{
                 setEmail(user.email)
             }
         }
-  
-    }, [dispatch,history,userInfo,user,success])
+    }, [dispatch, history, userInfo, user, success])
 
-    const submitHandler=(e)=>{
+    const submitHandler = (e) => {
         e.preventDefault()
-        if (password != confirmpassword){
-            setMessage('Password did not match')
+        if( password != confirmPassword){
+            setMessage('Password do not match')
         }else{
-            dispatch(updateUserProfile({
-                'id':user._id,
-                'name':name,
-                'email':email,
-                'password':password,
-            }))
-            setMessage('')
-        }
-
+            dispatch(updateUserProfile({ 
+                'id': user.id,
+                'email': email,
+                'password': password
+             }))
+             setMessage('')
+             history.push('/profile')
+        } 
     }
     return (
+        <div>
         <Row>
-            <Col md={3} className="justify-content-md-center text-left">
-            <h1>PROFILE</h1>
-            {message && <Message variant='danger'>{message}</Message>}
-
+            <Col md={10} className="justify-content-md-center my-5">
+                <h2>Update Profile</h2>
+                {message && <Message variant='danger'>{message}</Message>}
             {error && <Message variant='danger'>{error}</Message>}
             {loading && <Loader />}
+
             <Form onSubmit={submitHandler}>
-                <Form.Group controlId='name'>
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control
-                    type='text'
-                    placeholder='Enter Name'
-                    value={name}
-                    onChange={(e)=>setName(e.target.value)}
-                    >
-                    </Form.Control>
-                </Form.Group>
-
-
-                <Form.Group controlId='email'>
+                <Form.Group controlId='email' className='my-3'>
                     <Form.Label>Email Address</Form.Label>
                     <Form.Control
-                    type='email'
-                    placeholder='Enter Email'
-                    value={email}
-                    onChange={(e)=>setEmail(e.target.value)}
+                   
+                        type='email'
+                        placeholder='Enter Email'
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     >
                     </Form.Control>
+
                 </Form.Group>
 
-
-                <Form.Group controlId='password'>
+                <Form.Group controlId='password' className='my-3'>
                     <Form.Label>Password</Form.Label>
                     <Form.Control
-                    type='password'
-                    placeholder='Enter Password'
-                    value={password}
-                    onChange={(e)=>setPassword(e.target.value)}
+                     
+                        type='password'
+                        placeholder='Enter Password'
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
                     >
                     </Form.Control>
+
                 </Form.Group>
 
-                <Form.Group controlId='confirmpassword'>
-                    <Form.Label>Confirm Password</Form.Label>
+                <Form.Group controlId='password' className='my-3'>
+                    <Form.Label>Re-Type Password</Form.Label>
                     <Form.Control
-                    type='password'
-                    placeholder='Confirm Password'
-                    value={confirmpassword}
-                    onChange={(e)=>setConfirmPassword(e.target.value)}
+                    
+                        type='password'
+                        placeholder='Confirm Password'
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
                     >
                     </Form.Control>
+
                 </Form.Group>
 
-
-
-                <Button type='submit' variant='primary'>Update</Button>
+                <Button 
+                    type='submit'
+                    variant='primary'
+                    className='my-3'
+                > 
+                    Update
+                </Button>
             </Form>
             </Col>
-            <Col md={9}>
-                <h1>Orders</h1>
-                {loadingOrder ? (
-                <Loader/>
-            ) : errorOrder ? (
-                <Message variant='danger'>{errorOrder}</Message>
-            ) : (
-                <Table striped responsive className='table-sm'>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Date</th>
-                            <th>TotalL</th>
-                            <th>Paid</th>
-                            <th>Delivered</th>
-                            <th></th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {orders.map(order => (
-                            <tr key={order._id}>
-                                <td>{order._id}</td>
-                                <td>{order.createdAt.substring(0,10)}</td>
-                                <td>${order.totalPrice}</td>
-                                <td>{order.isPaid ? order.paidAt.substring(0,10) : (
-                                    <i className='fas fa-times' style={{color: 'red'}}></i>
-                                )}</td>
-                                <td>
-                                    <LinkContainer to={`/order/${order._id}`}>
-                                        <Button className='btn-sm'>Details</Button>
-                                        </LinkContainer>
-                                </td>
-
-                            </tr>
-                        ))}
-                    </tbody>
-                </Table>
-            )}
-            </Col>
         </Row>
+        </div>
     )
 }
 
