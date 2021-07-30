@@ -16,7 +16,6 @@ import {
     USER_UPDATE_PROFILE_REQUEST,
     USER_UPDATE_PROFILE_SUCCESS,
     USER_UPDATE_PROFILE_FAIL,
-    USER_UPDATE_PROFILE_RESET,
 
 } from '../constants/userConstants'
 import axios from 'axios'
@@ -56,8 +55,7 @@ export const logout=()=>(dispatch)=>{
     localStorage.removeItem('userInfo')
     dispatch({type:USER_LOGOUT})
     dispatch({type:USER_DETAILS_RESET})
-    dispatch({type:ORDER_LIST_MY_RESET})
-    dispatch({type:USER_LIST_RESET})
+
 }
 
 
