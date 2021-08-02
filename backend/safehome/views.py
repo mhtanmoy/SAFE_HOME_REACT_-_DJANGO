@@ -71,3 +71,101 @@ def getUserProfile(request):
     user = request.user
     serializer = UserSerializer(user, many=False)
     return Response(serializer.data)
+
+
+@api_view(['POST'])
+@permission_classes([IsAdminUser])
+def createApartment(request):
+    user=request.user
+    apartment=Apartmentdetails.objects.create(
+        user=user,
+        title=' ',
+        price=0,
+        details=' ',
+    )
+    serializer=ApartmentdetailsSerializer(apartment, many=False)
+    return Response(serializer.data)
+
+
+
+@api_view(['PUT'])
+@permission_classes([IsAdminUser])
+def updateApartment(request,pk):
+    user=request.user
+    data=request.data
+    apartment= Apartmentdetails.objects.get(id=pk)
+
+    apartment.title=data['title']
+    apartment.price=data['price']
+    apartment.details=data['details']
+    apartment.availability=data['availability']
+
+
+    apartment.save()
+    serializer=ApartmentdetailsSerializer(apartment, many=False)
+    return Response(serializer.data)
+
+
+@api_view(['POST'])
+def updateImage(request):
+    data = request.data
+    apartmentId = data['apartment_id']
+    apartment = Apartmentdetails.objects.get(id=apartmentId)
+    apartment.photo = request.FILES.get('image')
+    apartment.save()
+
+    return Response("picture was uploaded")
+
+
+@api_view(['GET'])
+def getApartment(request):
+    user = request.user
+    apartment = Apartmentdetails.objects.filter(availability=true)
+    serializer = ApartmentdetailsSerializer(apartment, many = True)
+
+    return Response(serializer.data)
+
+
+
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def createBooking(request):
+    user=request.user
+    data=request.data
+    apartment=Apartmentdetails.objects.get(id=data['apartment_id'])
+
+    booking=Booking.objects.create(
+        user=user,
+        apartmentdetails=apartment,
+    )
+
+    serializers=BookingSerializer(booking, many=False)
+    return Response(serializers.data)
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
+def updateBookingToPaid(request,pk):
+    booking= Booking.objects.get(id=pk)
+    booking.isPaid=True
+    booking.paidAt= datetime.now()
+    order.save()
+
+    return Response("booking paid")
+
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getMyBooking(request):
+    user = request.user
+    booking = user.booking_set.all()
+    serializer = BookingSerializer(booking, many = True)
+
+    return Response(serializer.data)
+
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteApartment(request,pk):
+    apartmentDeletion= Apartmentdetails.objects.get(id=pk)
+    apartmentDeletion.delete()
+
+    return Response("Apartment deleted")
