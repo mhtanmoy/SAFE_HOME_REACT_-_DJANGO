@@ -8,7 +8,16 @@ import {
     userLoginReducer,
     userRegisterReducer,
     userDetailsReducer,
-    userUpdateProfileReducer } from './reducers/userReducers'
+    userUpdateProfileReducer 
+} from './reducers/userReducers'
+
+import { 
+    apartmentListReducer,
+    apartmentDetailsReducer,
+    apartmentDeleteReducer,
+    apartmentCreateReducer,
+    apartmentUpdateReducer
+} from './reducers/apartmentReducers'
 
 
 
@@ -17,6 +26,13 @@ const reducer = combineReducers({
     userRegister: userRegisterReducer,
     userDetails: userDetailsReducer,
     userUpdateProfile: userUpdateProfileReducer,
+
+    apartmentList:apartmentListReducer,
+    apartmentDetails:apartmentDetailsReducer,
+    apartmentDelete:apartmentDeleteReducer,
+    apartmentCreate:apartmentCreateReducer,
+    apartmentUpdate:apartmentUpdateReducer,
+    
 })
 
 const userInfoFromStorage = localStorage.getItem('userInfo') ?

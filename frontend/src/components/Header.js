@@ -14,7 +14,7 @@ function Header() {
     }
     return (
             <header>
-                <Navbar bg="dark" variand="dark" expand="lg" collapseOnSelect>
+                <Navbar className="navbar navbar-expand-lg navbar-dark bg-primary" collapseOnSelect>
                     <Container>
                         <LinkContainer to='/'>
                         <Navbar.Brand >SAFE HOME</Navbar.Brand>

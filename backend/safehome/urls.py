@@ -11,9 +11,10 @@ urlpatterns = [
     
     path('apartment', views.getApartment, name="get-Apartment"),
     path('apartment/create', views.createApartment, name="create-Apartment"),
-    path('apartment/delete', views.deleteApartment, name="delete-Apartment"),
-    path('apartment/update', views.updateApartment, name="update-Apartment"),
+    path('apartment/<int:pk>', views.getApartmentById, name="get-ApartmentById"),
     path('apartment/image/update', views.updateImage, name="update-Image"),
+    path('apartment/delete/<int:pk>', views.deleteApartment, name="delete-Apartment"),
+    path('apartment/update/<int:pk>', views.updateApartment, name="update-Apartment"),
 
     path('booking', views.getMyBooking, name="get-MyBooking"),
     path('booking/create', views.createBooking, name="create-Booking"),

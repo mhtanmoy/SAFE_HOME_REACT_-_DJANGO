@@ -120,11 +120,25 @@ def updateImage(request):
 @api_view(['GET'])
 def getApartment(request):
     user = request.user
-    apartment = Apartmentdetails.objects.filter(availability=true)
+    apartment = Apartmentdetails.objects.filter(availability=True)
     serializer = ApartmentdetailsSerializer(apartment, many = True)
 
     return Response(serializer.data)
 
+@api_view(['DELETE'])
+@permission_classes([IsAdminUser])
+def deleteApartment(request,pk):
+    apartmentDeletion= Apartmentdetails.objects.get(id=pk)
+    apartmentDeletion.delete()
+
+    return Response("Apartment deleted")
+
+@api_view(['GET'])
+def getApartmentById(request,pk):
+    apartmentDetails= Apartmentdetails.objects.get(id=pk)
+    serializer = ApartmentdetailsSerializer(apartmentDetails, many = False)
+
+    return Response(serializer.data)
 
 
 @api_view(['POST'])
@@ -162,10 +176,3 @@ def getMyBooking(request):
 
     return Response(serializer.data)
 
-@api_view(['DELETE'])
-@permission_classes([IsAdminUser])
-def deleteApartment(request,pk):
-    apartmentDeletion= Apartmentdetails.objects.get(id=pk)
-    apartmentDeletion.delete()
-
-    return Response("Apartment deleted")
