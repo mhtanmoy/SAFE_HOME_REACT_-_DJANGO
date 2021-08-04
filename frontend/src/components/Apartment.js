@@ -21,22 +21,20 @@ function Apartment({ apartment }) {
 
     let history = useHistory()
 
+    
+
+
+
     const deleteHandler = (id) => {
         if (window.confirm('Are you sure you want to this apartment?')) {
             dispatch(deleteApartment(id))
-            dispatch({ type: APARTMENT_LIST_RESET })
-            dispatch(listApartments())
-            history.push('/')
         }
 
     }
 
     return (
         <div>
-            {loading && <Loader />}
-            {error && <Message variant='danger'>{error}</Message>}
-
-
+            
             <Card className="my-3 p-3 rounded">
                 <Link to={`/apartment/${apartment.id}`}>
                     <Card.Img src={apartment.photo} />

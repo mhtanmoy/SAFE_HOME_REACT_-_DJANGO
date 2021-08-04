@@ -78,7 +78,6 @@ def getUserProfile(request):
 def createApartment(request):
     user=request.user
     apartment=Apartmentdetails.objects.create(
-        user=user,
         title=' ',
         price=0,
         details=' ',

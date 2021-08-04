@@ -18,20 +18,37 @@ function HomeScreen({ history }) {
     const apartmentList = useSelector(state => state.apartmentList)
     const { error, loading, apartments } = apartmentList
 
+    const apartmentDelete = useSelector(state => state.apartmentDelete)
+    const { loading:loadingD, error:errorD, success } = apartmentDelete
+
+    const apartmentCreate = useSelector(state => state.apartmentCreate)
+    const { loading:loadingC, error:errorC, success:successC, apartment:apartmentC } = apartmentCreate
+
+
 
     useEffect(() => {
-        dispatch({ type: APARTMENT_LIST_RESET })
-        dispatch(listApartments())
-    }, [dispatch])
+        if(success){
+            dispatch({ type: APARTMENT_LIST_RESET })
+            dispatch(listApartments())
+        }else{
+            dispatch(listApartments())
+        }
+        if(successC){
+            history.push(`/apartment/${apartmentC.id}/edit`)
+        }
+
+    }, [dispatch,history,successC, success])
 
     const createApartmentHandler = () => {
         dispatch(createApartment())
     }
 
+
     return (
         <div>
 
             {userInfo && userInfo.isAdmin && (
+                
                 <Button className='my-3' onClick={createApartmentHandler}>
                     <i className='fas fa-plus'></i> Create Apartment
                 </Button>
