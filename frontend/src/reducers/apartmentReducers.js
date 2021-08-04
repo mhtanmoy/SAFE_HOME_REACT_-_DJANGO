@@ -2,6 +2,7 @@ import {
     APARTMENT_LIST_REQUEST,
     APARTMENT_LIST_SUCCESS,
     APARTMENT_LIST_FAIL,
+    APARTMENT_LIST_RESET,
     
     APARTMENT_DETAILS_REQUEST,
     APARTMENT_DETAILS_SUCCESS,
@@ -38,6 +39,9 @@ export const apartmentListReducer = (state = { apartments: [] }, action) => {
 
         case APARTMENT_LIST_FAIL:
             return {loading: false, error: action.payload }
+
+        case APARTMENT_LIST_RESET:
+            return { apartments: [] }
 
         default:
             return state
