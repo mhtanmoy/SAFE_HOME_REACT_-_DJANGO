@@ -44,8 +44,7 @@ class BookingSerializer(serializers.ModelSerializer):
         fields= '__all__'
 
     def get_apartmentdetails(self,obj):
-        apartment=obj.apartmentdetails_set.all()
-        serializer=ApartmentdetailsSerializer(apartment, many=True)
+        serializer=ApartmentdetailsSerializer(obj.apartmentdetails, many=False)
         return serializer.data
 
     def get_user(self,obj):

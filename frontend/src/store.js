@@ -19,6 +19,12 @@ import {
     apartmentUpdateReducer
 } from './reducers/apartmentReducers'
 
+import { 
+    bookingCreateReducer,
+    bookingDetailsReducer,
+    bookingPayReducer 
+} from './reducers/bookingReducers'
+
 
 
 const reducer = combineReducers({
@@ -32,6 +38,10 @@ const reducer = combineReducers({
     apartmentDelete:apartmentDeleteReducer,
     apartmentCreate:apartmentCreateReducer,
     apartmentUpdate:apartmentUpdateReducer,
+
+    bookingCreate:bookingCreateReducer,
+    bookingDetails:bookingDetailsReducer,
+    bookingPay:bookingPayReducer,
     
 })
 

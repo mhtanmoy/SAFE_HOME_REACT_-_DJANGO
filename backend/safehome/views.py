@@ -153,6 +153,10 @@ def createBooking(request):
     )
 
     serializers=BookingSerializer(booking, many=False)
+
+    apartment.availability=False
+    apartment.save()
+    
     return Response(serializers.data)
 
 

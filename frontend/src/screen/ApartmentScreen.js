@@ -5,6 +5,7 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { useDispatch, useSelector } from 'react-redux'
 import { listApartmentDetails } from '../actions/apartmentActions'
+import { createBooking } from '../actions/bookingActions'
 
 
 
@@ -17,7 +18,10 @@ function ApartmentScreen({ match, history }) {
     const userLogin = useSelector(state => state.userLogin)
     const { userInfo } = userLogin
 
-    
+    const bookingCreate = useSelector(state => state.bookingCreate)
+    const { error: errorB, loading: loadingB, booking } = bookingCreate
+
+
 
 
     useEffect(() => {
@@ -25,14 +29,17 @@ function ApartmentScreen({ match, history }) {
     }, [dispatch, match])
 
     const bookingHandler = () => {
-        
-        history.push(`/booking/${match.params.id}`)
+        dispatch(createBooking({
+            apartment_id: apartment.id
+        }))
     }
 
 
     return (
         <div>
             <Link to='/' className='btn btn-light my-3'>Go Back</Link>
+
+
             {loading ? <Loader />
                 : error ? <Message variant='secondary'>{error}</Message>
                     : (<div>
@@ -79,6 +86,12 @@ function ApartmentScreen({ match, history }) {
                                                 disabled={!apartment.availability}
                                                 type='button'>Booking </Button>
                                         </ListGroup.Item>
+                                        {error && <Message variant='danger'>{error}</Message>}
+                                        {loading && <Loader />}
+
+                                        {booking && <Message variant='primary'>
+                                            Your Booking id is {booking.id}. We will contact you through your e-mail with-in 24 hours. Stay safe. 
+                                        </Message>}
                                     </ListGroup>
                                 </Card>
                             </Col>
