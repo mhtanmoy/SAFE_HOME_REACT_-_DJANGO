@@ -19,5 +19,5 @@ urlpatterns = [
     path('booking', views.getMyBooking, name="get-MyBooking"),
     path('booking/create', views.createBooking, name="create-Booking"),
     path('booking/pay/update', views.updateBookingToPaid, name="update-Paid"),
-    
+    path('booking/<int:pk>', views.getBookingById, name="get-Booking-ID"),
 ]

@@ -175,3 +175,11 @@ def getMyBooking(request):
 
     return Response(serializer.data)
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def getBookingById(request,pk):
+    booking = Booking.objects.get(id=pk)
+    serializer = BookingSerializer(booking, many = False)
+
+    return Response(serializer.data)
+

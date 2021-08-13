@@ -5,7 +5,7 @@ import Loader from '../components/Loader'
 import Message from '../components/Message'
 import { useDispatch, useSelector } from 'react-redux'
 import { listApartmentDetails } from '../actions/apartmentActions'
-import { PayPalButton } from 'react-paypal-button-v2'
+
 
 
 function ApartmentScreen({ match, history }) {
@@ -25,6 +25,7 @@ function ApartmentScreen({ match, history }) {
     }, [dispatch, match])
 
     const bookingHandler = () => {
+        
         history.push(`/booking/${match.params.id}`)
     }
 
