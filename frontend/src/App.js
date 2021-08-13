@@ -18,10 +18,10 @@ function App() {
           <Route path="/" component={HomeScreen} exact />
           <Route path="/login" component={LoginScreen} />
           <Route path="/register" component={RegisterScreen} />
-          <Route path="/profile" component={ProfileScreen} />
-          <Route path="/apartment/:id" component={ApartmentScreen} />
+
           <Route path="/apartment/:id/edit" component={ApartmentEditScreen} />
-          
+          <Route path="/profile" component={ProfileScreen} />
+          <Route path="/apartment/:id/view" component={ApartmentScreen} />
         </Container>
       </main>
       <Footer />

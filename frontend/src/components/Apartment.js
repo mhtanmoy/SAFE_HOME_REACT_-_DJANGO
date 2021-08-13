@@ -36,11 +36,11 @@ function Apartment({ apartment }) {
         <div>
             
             <Card className="my-3 p-3 rounded">
-                <Link to={`/apartment/${apartment.id}`}>
+                <Link to={`/apartment/${apartment.id}/view`}>
                     <Card.Img src={apartment.photo} />
                 </Link>
                 <Card.Body>
-                    <Link to={`/apartment/${apartment.id}`}>
+                    <Link to={`/apartment/${apartment.id}/view`}>
                         <Card.Title as="div" >
                             <strong>
                                 {apartment.title}
