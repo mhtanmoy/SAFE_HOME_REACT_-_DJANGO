@@ -1,2 +1,2 @@
 # SAFE_HOME_REACT_DJANGO
-http://safehome1.herokuapp.com/
+https://safehome1.herokuapp.com/
