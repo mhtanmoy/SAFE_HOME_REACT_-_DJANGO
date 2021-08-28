@@ -29,11 +29,15 @@ function ApartmentScreen({ match, history }) {
     }, [dispatch, match])
 
     const bookingHandler = () => {
-        dispatch(createBooking({
-            apartment_id: apartment.id
-        }))
+        if(userInfo){
+            dispatch(createBooking({
+                apartment_id: apartment.id
+            }))
+        }
+        else{
+            history.push('/login')
+        }
     }
-
 
     return (
         <div>
